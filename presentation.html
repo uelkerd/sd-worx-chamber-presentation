@@ -11,23 +11,24 @@
       @media print {
         @page {
           size: A4 landscape;
-          margin: 0.5cm;
+          margin: 0.3cm;
         }
         
         * {
           -webkit-print-color-adjust: exact !important;
           color-adjust: exact !important;
           print-color-adjust: exact !important;
+          box-sizing: border-box !important;
         }
         
         body {
           background: white !important;
-          margin: 0;
-          padding: 0;
-          font-family: system-ui, -apple-system, sans-serif;
+          margin: 0 !important;
+          padding: 0 !important;
+          font-family: system-ui, -apple-system, sans-serif !important;
           color: #000 !important;
-          font-size: 11pt;
-          line-height: 1.2;
+          font-size: 9pt !important;
+          line-height: 1.1 !important;
         }
         
         /* Hide navigation for print */
@@ -35,73 +36,188 @@
           display: none !important;
         }
         
-        /* Make all slides visible for print with strict constraints */
+        /* CRITICAL: Force exactly 6 pages with strict height constraints */
         .slide {
           display: flex !important;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: center;
-          height: 26cm !important; /* Fixed height for A4 landscape */
-          width: 100% !important;
-          padding: 0.5cm !important;
-          page-break-after: always;
-          page-break-inside: avoid;
-          background: white;
-          box-sizing: border-box;
-          overflow: hidden !important; /* Prevent overflow */
+          flex-direction: column !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          height: 19cm !important; /* Reduced from 26cm to prevent overflow */
+          width: 27cm !important; /* A4 landscape width minus margins */
+          padding: 0.3cm !important;
+          margin: 0 !important;
+          page-break-after: always !important;
+          page-break-inside: avoid !important;
+          background: white !important;
+          overflow: hidden !important; /* Critical: hide any overflow */
+          position: relative !important;
         }
         
         /* Remove page break from last slide */
         .slide:last-child {
-          page-break-after: auto;
+          page-break-after: auto !important;
         }
         
-        /* Constrain all content within slides */
+        /* Force all slide content to fit within constraints */
         .slide > * {
           max-width: 100% !important;
-          max-height: fit-content !important;
-          margin: 0.2cm 0 !important;
+          flex-shrink: 1 !important;
+          margin: 0.1cm 0 !important;
         }
         
-        /* Title slides */
+        /* TITLE SLIDES - Very constrained */
         .slide h1 {
-          font-size: 24pt !important;
+          font-size: 20pt !important;
           font-weight: bold !important;
           color: #2563eb !important;
           text-align: center !important;
-          margin: 0.5cm 0 !important;
+          margin: 0.3cm 0 !important;
           line-height: 1.1 !important;
+          max-height: 3cm !important;
+          overflow: hidden !important;
         }
         
         .slide h2 {
-          font-size: 18pt !important;
+          font-size: 16pt !important;
           font-weight: bold !important;
           color: #1e40af !important;
           text-align: center !important;
-          margin: 0.3cm 0 !important;
+          margin: 0.2cm 0 !important;
+          max-height: 2cm !important;
+          overflow: hidden !important;
         }
         
         .slide h3 {
-          font-size: 14pt !important;
+          font-size: 12pt !important;
           font-weight: bold !important;
           color: #000 !important;
-          margin: 0.2cm 0 !important;
+          margin: 0.1cm 0 !important;
+          max-height: 1.5cm !important;
+          overflow: hidden !important;
         }
         
-        /* Cards and content blocks */
+        /* CARDS - Much smaller and constrained */
         .bg-white, .rounded-xl, .card {
           background: white !important;
           border: 1px solid #d1d5db !important;
-          border-radius: 4pt !important;
-          padding: 0.3cm !important;
-          margin: 0.2cm 0 !important;
+          border-radius: 2pt !important;
+          padding: 0.2cm !important;
+          margin: 0.1cm 0 !important;
           box-shadow: none !important;
+          max-height: 4cm !important;
+          overflow: hidden !important;
+          flex-shrink: 1 !important;
         }
         
-        /* Blue cards */
+        /* Blue highlight cards */
         .bg-primary-50, .bg-blue-50 {
           background: #eff6ff !important;
           border: 1px solid #3b82f6 !important;
+        }
+        
+        /* Large highlight boxes (like €12,00) */
+        .slide .bg-blue-100, .slide .bg-primary-100 {
+          background: #dbeafe !important;
+          color: #1e40af !important;
+          font-size: 14pt !important;
+          font-weight: bold !important;
+          text-align: center !important;
+          padding: 0.3cm !important;
+          margin: 0.2cm 0 !important;
+          max-height: 2cm !important;
+          overflow: hidden !important;
+        }
+        
+        /* Green result boxes */
+        .bg-green-500, .bg-green-600, .result-highlight {
+          background: #22c55e !important;
+          color: white !important;
+          font-weight: bold !important;
+          padding: 0.2cm !important;
+          text-align: center !important;
+          font-size: 10pt !important;
+          max-height: 1.5cm !important;
+          overflow: hidden !important;
+        }
+        
+        /* CHARTS - Severely constrained */
+        .chart-container, canvas {
+          width: 100% !important;
+          height: 6cm !important; /* Much smaller charts */
+          max-height: 6cm !important;
+          max-width: 100% !important;
+          margin: 0.1cm 0 !important;
+          overflow: hidden !important;
+        }
+        
+        canvas {
+          display: block !important;
+        }
+        
+        /* TABLES - Compressed */
+        table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          font-size: 8pt !important;
+          margin: 0.1cm 0 !important;
+          max-height: 8cm !important;
+          overflow: hidden !important;
+        }
+        
+        th, td {
+          border: 1px solid #d1d5db !important;
+          padding: 0.05cm !important;
+          text-align: left !important;
+          vertical-align: top !important;
+          font-size: 8pt !important;
+          line-height: 1 !important;
+        }
+        
+        th {
+          background: #f3f4f6 !important;
+          font-weight: bold !important;
+        }
+        
+        /* TEXT ELEMENTS - Very small */
+        p, div, span, li {
+          color: #000 !important;
+          font-size: 9pt !important;
+          line-height: 1.1 !important;
+          margin: 0.05cm 0 !important;
+        }
+        
+        /* Lists - Compressed */
+        ul, ol {
+          margin: 0.1cm 0 !important;
+          padding-left: 0.3cm !important;
+        }
+        
+        li {
+          margin: 0.05cm 0 !important;
+          font-size: 8pt !important;
+        }
+        
+        /* Process boxes - Smaller */
+        .process-box {
+          border: 1px solid #3b82f6 !important;
+          background: white !important;
+          padding: 0.15cm !important;
+          margin: 0.1cm !important;
+          border-radius: 2pt !important;
+          font-size: 8pt !important;
+          max-height: 3cm !important;
+          overflow: hidden !important;
+        }
+        
+        .process-box.saarland {
+          border-color: #0891b2 !important;
+        }
+        
+        /* Summary boxes - Constrained */
+        .summary-card {
+          max-height: 6cm !important;
+          overflow: hidden !important;
+          flex-shrink: 1 !important;
         }
         
         /* Text colors for print */
@@ -117,124 +233,93 @@
           color: #4b5563 !important;
         }
         
-        /* Charts container */
-        .chart-container {
-          width: 100% !important;
-          height: 8cm !important; /* Fixed height for charts */
-          max-height: 8cm !important;
-          margin: 0.3cm 0 !important;
-          display: flex !important;
-          justify-content: center !important;
-          align-items: center !important;
-        }
-        
-        /* Chart canvas */
-        canvas {
-          max-width: 100% !important;
-          max-height: 8cm !important;
-          height: auto !important;
-        }
-        
-        /* Tables */
-        table {
-          width: 100% !important;
-          border-collapse: collapse !important;
-          font-size: 10pt !important;
-          margin: 0.2cm 0 !important;
-        }
-        
-        th, td {
-          border: 1px solid #d1d5db !important;
-          padding: 0.1cm !important;
-          text-align: left !important;
-          vertical-align: top !important;
-        }
-        
-        th {
-          background: #f3f4f6 !important;
-          font-weight: bold !important;
-        }
-        
-        /* Calculation flows */
-        .calculation-step {
-          background: #f8fafc !important;
-          border: 1px solid #cbd5e1 !important;
-          padding: 0.2cm !important;
-          margin: 0.1cm 0 !important;
-          text-align: center !important;
-          font-size: 11pt !important;
-        }
-        
-        .result-highlight {
-          background: #22c55e !important;
-          color: white !important;
-          font-weight: bold !important;
-          padding: 0.2cm !important;
-          text-align: center !important;
-        }
-        
         /* Remove all animations and transitions */
         * {
           animation: none !important;
           transition: none !important;
+          transform: none !important;
         }
         
-        /* Force text to be readable */
-        p, div, span, li {
-          color: #000 !important;
-          font-size: 11pt !important;
-          line-height: 1.3 !important;
+                 /* Flow diagram elements - Very compact */
+         .flow-step {
+           background: #f1f5f9 !important;
+           border: 1px solid #94a3b8 !important;
+           padding: 0.1cm !important;
+           margin: 0.05cm 0 !important;
+           text-align: center !important;
+           font-size: 7pt !important;
+           max-height: 1cm !important;
+           overflow: hidden !important;
+         }
+         
+         /* Flow diagram image */
+         .flow-diagram img, .slide img {
+           max-width: 100% !important;
+           max-height: 12cm !important;
+           height: auto !important;
+           margin: 0.2cm 0 !important;
+           display: block !important;
+         }
+         
+         /* SVG flow diagrams */
+         .slide svg {
+           max-width: 100% !important;
+           max-height: 12cm !important;
+           margin: 0.2cm 0 !important;
+         }
+        
+        /* Special handling for specific slide content */
+        
+        /* Slide 1: Title slide */
+        .slide:nth-child(1) {
+          justify-content: center !important;
         }
         
-        /* Lists */
-        ul, ol {
-          margin: 0.2cm 0 !important;
-          padding-left: 0.5cm !important;
+        /* Slide 2: Executive Summary */
+        .slide:nth-child(2) .card {
+          max-height: 5cm !important;
         }
         
-        li {
-          margin: 0.1cm 0 !important;
+        /* Slide 3: Transition slide */
+        .slide:nth-child(3) h3 {
+          font-size: 14pt !important;
+          margin: 0.3cm 0 !important;
         }
         
-        /* Process comparison boxes */
-        .process-box {
-          border: 2px solid #3b82f6 !important;
-          background: white !important;
-          padding: 0.3cm !important;
-          margin: 0.2cm !important;
-          border-radius: 4pt !important;
+        /* Slide 4 & 5: Calculation slides */
+        .slide:nth-child(4) .card,
+        .slide:nth-child(5) .card {
+          max-height: 3cm !important;
+          font-size: 8pt !important;
         }
         
-        .process-box.saarland {
-          border-color: #0891b2 !important;
+        /* Slide 6: Comparison slide */
+        .slide:nth-child(6) table {
+          font-size: 7pt !important;
+          max-height: 6cm !important;
         }
         
-        /* Flow diagram */
-        .flow-step {
-          background: #f1f5f9 !important;
-          border: 1px solid #94a3b8 !important;
-          padding: 0.2cm !important;
-          margin: 0.1cm 0 !important;
-          text-align: center !important;
-          font-size: 10pt !important;
+        .slide:nth-child(6) .process-box {
+          max-height: 2cm !important;
+          font-size: 7pt !important;
         }
         
-        /* Ensure no content bleeds outside slides */
-        .slide {
-          position: relative !important;
-          overflow: hidden !important;
-        }
-        
-        /* Hide any overflow content */
+        /* Force content to stay within slide boundaries */
         .slide::after {
           content: "";
           position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
-          height: 0.2cm;
+          height: 0.1cm;
           background: white;
           z-index: 1000;
+        }
+        
+        /* Hide any content that exceeds slide boundaries */
+        .slide > div {
+          max-height: 18cm !important;
+          overflow: hidden !important;
         }
       }
 
@@ -995,9 +1080,9 @@
       }
 
       function exportPDF() {
-        console.log('Starting PDF export with improved timing...');
+        console.log('Starting simplified PDF export...');
         
-        // First, show all slides for printing
+        // Show all slides immediately
         for (let i = 0; i < totalSlides; i++) {
           const slide = document.getElementById(`slide-${i}`);
           if (slide) {
@@ -1006,49 +1091,42 @@
           }
         }
         
-        // Hide navigation during print
+        // Hide navigation
         const nav = document.querySelector('nav');
         if (nav) {
           nav.style.display = 'none';
         }
         
-        // Add print class to body
+        // Add print class
         document.body.classList.add('printing');
         
-        // Force charts to re-render by triggering a resize event
+        // Simple delay then print - no complex chart handling
         setTimeout(() => {
-          window.dispatchEvent(new Event('resize'));
+          console.log('Triggering print...');
+          window.print();
           
-          // Wait additional time for charts to fully render
+          // Restore after print
           setTimeout(() => {
-            console.log('Charts should be rendered, starting print...');
-            window.print();
-          }, 2000); // Increased delay
-        }, 500);
-        
-        // After print dialog closes, restore normal view
-        setTimeout(() => {
-          // Hide all slides again
-          for (let i = 0; i < totalSlides; i++) {
-            const slide = document.getElementById(`slide-${i}`);
-            if (slide) {
-              if (i !== currentSlide) {
+            // Hide all slides except current
+            for (let i = 0; i < totalSlides; i++) {
+              const slide = document.getElementById(`slide-${i}`);
+              if (slide && i !== currentSlide) {
                 slide.style.display = 'none';
+                slide.classList.remove('print-visible');
               }
-              slide.classList.remove('print-visible');
             }
-          }
-          
-          // Show navigation again
-          if (nav) {
-            nav.style.display = 'flex';
-          }
-          
-          // Remove print class
-          document.body.classList.remove('printing');
-          
-          console.log('PDF export completed, view restored');
-        }, 10000); // Give more time for print dialog
+            
+            // Show navigation
+            if (nav) {
+              nav.style.display = 'flex';
+            }
+            
+            // Remove print class
+            document.body.classList.remove('printing');
+            
+            console.log('PDF export completed');
+          }, 3000);
+        }, 1000); // Simple 1 second delay
       }
 
       // Keyboard navigation
