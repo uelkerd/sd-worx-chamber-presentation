@@ -4,7 +4,7 @@ Eine interaktive Präsentation über die rechtsvergleichende Systemanalyse der K
 
 ## 🚀 Live Demo
 
-**https://uelkerd.github.io/sd-worx-chamber-presentation/presentation.html**
+**<https://uelkerd.github.io/sd-worx-chamber-presentation/presentation.html>**
 
 ## 🔧 Important Note
 
@@ -32,10 +32,12 @@ Diese React-Anwendung präsentiert eine detaillierte Analyse der Kammerbeiträge
 ## 🚀 Installation & Start
 
 ### Voraussetzungen
+
 - Node.js (Version 16 oder höher)
 - npm oder yarn
 
 ### Installation
+
 ```bash
 # Dependencies installieren
 npm install
@@ -52,18 +54,21 @@ Die Anwendung läuft dann unter `http://localhost:3000`
 ## 📊 Berechnungsdetails
 
 ### Bremen (Arbeitnehmerkammer)
+
 - **Beitragssatz:** 0,12%
 - **Bemessungsgrundlage:** Steuerpflichtiger Arbeitslohn (LStDV)
 - **BBG:** Keine Obergrenze
 - **System:** Proportional
 
 ### Saarland (Arbeitskammer)
+
 - **Beitragssatz:** 0,15%
 - **Bemessungsgrundlage:** SV-pflichtiges Bruttoentgelt (SGB IV)
 - **BBG:** €8.050 monatlich (2025)
 - **System:** Degressiv
 
-### Beispielberechnung für €10.000 Bruttogehalt:
+### Beispielberechnung für €10.000 Bruttogehalt
+
 - **Bremen:** €10.000 × 0,12% = **€12,00**
 - **Saarland:** €8.050 × 0,15% = **€12,08**
 
@@ -104,6 +109,7 @@ src/
 ## 📱 Responsive Design
 
 Die Anwendung ist vollständig responsive und optimiert für:
+
 - Desktop (1920x1080 und höher)
 - Tablet (768px - 1024px)
 - Mobile (320px - 767px)
@@ -111,13 +117,51 @@ Die Anwendung ist vollständig responsive und optimiert für:
 ## 🎯 PDF Export
 
 Die Anwendung ist vorbereitet für PDF-Export. Die Implementierung kann mit folgenden Bibliotheken erfolgen:
+
 - `react-to-pdf`
 - `html2canvas` + `jspdf`
 - `@react-pdf/renderer`
 
+## 🔍 Code Quality Tools
+
+Das Projekt verwendet folgende Tools zur Sicherstellung der Code-Qualität:
+
+### ESLint
+
+ESLint prüft den Code auf Fehler und Stilprobleme:
+
+```bash
+# Code linting ausführen
+npm run lint
+
+# Automatisch behebbare Probleme fixen
+npm run lint:fix
+```
+
+### Prettier
+
+Prettier formatiert den Code einheitlich:
+
+```bash
+# Code formatieren
+npm run format
+
+# Überprüfen, ob der Code korrekt formatiert ist
+npm run format:check
+```
+
+### EditorConfig
+
+Die `.editorconfig` sorgt für konsistente Einstellungen in verschiedenen Editoren.
+
+### Husky & lint-staged
+
+Vor jedem Commit werden automatisch Linting und Formatierung durchgeführt.
+
 ## 🔧 Anpassungen
 
 ### Berechnungen ändern
+
 Alle Berechnungen befinden sich in `src/utils/calculations.js`:
 
 ```javascript
@@ -127,32 +171,36 @@ export const SAARLAND_RATE = 0.0015; // 0,15% für Saarland
 ```
 
 ### Styling anpassen
+
 Das Design kann über `tailwind.config.js` und `src/styles/index.css` angepasst werden.
 
 ## 📋 Berechnungsverifikation
 
 Alle Berechnungen wurden sorgfältig verifiziert:
 
-| Gehalt | Bremen | Saarland | Differenz |
-|--------|--------|----------|-----------|
-| €5.000 | €6,00 | €7,50 | +€1,50 SL |
-| €8.050 | €9,66 | €12,08 | +€2,42 SL |
-| €10.000 | €12,00 | €12,08 | +€0,08 SL |
-| €15.000 | €18,00 | €12,08 | -€5,92 SL |
-| €20.000 | €24,00 | €12,08 | -€11,92 SL |
+| Gehalt  | Bremen | Saarland | Differenz  |
+| ------- | ------ | -------- | ---------- |
+| €5.000  | €6,00  | €7,50    | +€1,50 SL  |
+| €8.050  | €9,66  | €12,08   | +€2,42 SL  |
+| €10.000 | €12,00 | €12,08   | +€0,08 SL  |
+| €15.000 | €18,00 | €12,08   | -€5,92 SL  |
+| €20.000 | €24,00 | €12,08   | -€11,92 SL |
 
 ## 🎨 Design-System
 
 ### Farben
+
 - **Primary:** Blau (#0ea5e9) - Bremen
-- **Secondary:** Lila (#8b5cf6) - Saarland  
+- **Secondary:** Lila (#8b5cf6) - Saarland
 - **Accent:** Orange (#f97316) - Highlights
 
 ### Typografie
+
 - **Font:** Inter (Google Fonts)
 - **Gewichte:** 300, 400, 500, 600, 700, 800, 900
 
 ### Animationen
+
 - **Slide Transitions:** 500ms ease-out
 - **Element Animations:** Staggered mit Framer Motion
 - **Hover Effects:** Scale und Shadow Transitions
@@ -171,9 +219,9 @@ Dieses Projekt wurde für SD WORX erstellt. Alle Rechte vorbehalten.
 ## 👨‍💻 Autor
 
 **Deniz Ülker**  
-*26. Juli 2025*
+_26. Juli 2025_
 
 ---
 
 **Rechtsstand:** 2025  
-**Quellen:** ArbnkG Bremen, AKG Saarland, SV-Rechengrößenverordnung 2025 
+**Quellen:** ArbnkG Bremen, AKG Saarland, SV-Rechengrößenverordnung 2025
