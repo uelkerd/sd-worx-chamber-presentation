@@ -33,6 +33,7 @@ SD-WORX/
 │   └── flow-diagram-spacious.svg # Flussdiagramm
 ├── presentation.html       # Eigenständige HTML-Präsentation
 ├── index.html             # Weiterleitungsseite
+├── set-author.sh          # Skript zur Einstellung des Git-Autors
 ├── .github/workflows/     # GitHub Actions für Deployment
 │   └── deploy.yml         # Deployment-Konfiguration
 └── README.md              # Projektdokumentation
@@ -43,6 +44,17 @@ SD-WORX/
 1. Öffnen Sie `presentation.html` in einem modernen Webbrowser
 2. Navigieren Sie mit den Pfeiltasten oder den Navigationsschaltflächen
 3. Nutzen Sie die PDF-Export-Funktion für eine druckbare Version
+
+## Entwicklung
+
+Wenn Sie an diesem Projekt mitarbeiten möchten:
+
+1. Führen Sie zuerst das Skript `set-author.sh` aus, um den korrekten Git-Autor einzustellen:
+   ```bash
+   ./set-author.sh
+   ```
+
+2. Dies stellt sicher, dass alle Commits mit dem Autor "uelkerd" erstellt werden.
 
 ## Technologien
 
