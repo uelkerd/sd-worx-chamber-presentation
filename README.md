@@ -84,18 +84,28 @@ Die Anwendung läuft dann unter `http://localhost:3000`
 ## 📁 Projektstruktur
 
 ```
-src/
-├── components/
-│   ├── Slide1Title.jsx          # Titel-Slide
-│   ├── Slide2ExecutiveSummary.jsx # Executive Summary
-│   ├── Charts.jsx               # Chart-Komponenten
-│   └── Navigation.jsx           # Navigation
-├── utils/
-│   └── calculations.js          # Berechnungslogik
-├── styles/
-│   └── index.css               # Globale Styles
-├── App.jsx                     # Hauptkomponente
-└── index.js                    # App-Einstiegspunkt
+SD-WORX/
+├── public/
+│   └── index.html          # HTML-Template
+├── src/
+│   ├── components/         # React-Komponenten
+│   │   ├── Charts.jsx      # Chart.js-Diagramme
+│   │   ├── Navigation.jsx  # Navigationssteuerung
+│   │   ├── Slide1Title.jsx # Titelseite
+│   │   └── Slide2ExecutiveSummary.jsx # Zusammenfassung
+│   ├── styles/             # CSS-Stile
+│   │   └── index.css       # Hauptstildatei
+│   ├── utils/              # Hilfsfunktionen
+│   │   └── calculations.js # Berechnungslogik
+│   ├── App.jsx             # Hauptkomponente
+│   └── index.js            # Einstiegspunkt
+├── images/                 # Bilder und Diagramme
+│   └── flow-diagram-spacious.svg # Flussdiagramm
+├── presentation.html       # Eigenständige HTML-Präsentation
+├── .eslintrc.json          # ESLint-Konfiguration
+├── .prettierrc             # Prettier-Konfiguration
+├── package.json            # Projektabhängigkeiten
+└── tailwind.config.js      # Tailwind CSS-Konfiguration
 ```
 
 ## 🎮 Navigation
