@@ -11,7 +11,7 @@
       @media print {
         @page {
           size: A4 landscape;
-          margin: 1cm;
+          margin: 0.5cm;
         }
         
         * {
@@ -26,7 +26,8 @@
           padding: 0;
           font-family: system-ui, -apple-system, sans-serif;
           color: #000 !important;
-          font-size: 12pt;
+          font-size: 11pt;
+          line-height: 1.2;
         }
         
         /* Hide navigation for print */
@@ -34,143 +35,206 @@
           display: none !important;
         }
         
-        /* Make all slides visible for print with proper page breaks */
+        /* Make all slides visible for print with strict constraints */
         .slide {
           display: flex !important;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
-          width: 100%;
-          height: 95vh;
-          padding: 1cm;
+          height: 26cm !important; /* Fixed height for A4 landscape */
+          width: 100% !important;
+          padding: 0.5cm !important;
           page-break-after: always;
           page-break-inside: avoid;
-          background: white !important;
+          background: white;
           box-sizing: border-box;
-          overflow: hidden;
+          overflow: hidden !important; /* Prevent overflow */
         }
         
-        /* Ensure last slide doesn't have page break */
+        /* Remove page break from last slide */
         .slide:last-child {
-          page-break-after: avoid;
+          page-break-after: auto;
         }
         
-        /* Fix text colors - make everything dark and readable */
-        .slide h1, .slide h2, .slide h3, .slide h4, .slide h5, .slide h6 {
-          color: #000 !important;
-          font-weight: bold !important;
+        /* Constrain all content within slides */
+        .slide > * {
+          max-width: 100% !important;
+          max-height: fit-content !important;
+          margin: 0.2cm 0 !important;
         }
         
-        .slide p, .slide div, .slide span, .slide td, .slide th {
-          color: #000 !important;
-        }
-        
-        /* Fix title slide */
+        /* Title slides */
         .slide h1 {
-          font-size: 48pt !important;
+          font-size: 24pt !important;
+          font-weight: bold !important;
           color: #2563eb !important;
-          margin-bottom: 0.5cm;
+          text-align: center !important;
+          margin: 0.5cm 0 !important;
+          line-height: 1.1 !important;
         }
         
         .slide h2 {
-          font-size: 36pt !important;
-          color: #0ea5e9 !important;
-          margin-bottom: 1cm;
+          font-size: 18pt !important;
+          font-weight: bold !important;
+          color: #1e40af !important;
+          text-align: center !important;
+          margin: 0.3cm 0 !important;
         }
         
         .slide h3 {
-          font-size: 18pt !important;
+          font-size: 14pt !important;
+          font-weight: bold !important;
           color: #000 !important;
-          margin-bottom: 0.5cm;
+          margin: 0.2cm 0 !important;
         }
         
-        /* Cards and content boxes */
-        .card, .bg-white {
+        /* Cards and content blocks */
+        .bg-white, .rounded-xl, .card {
           background: white !important;
-          border: 2px solid #ddd !important;
-          border-radius: 8px !important;
-          padding: 0.5cm !important;
-          margin: 0.3cm 0 !important;
-          break-inside: avoid;
+          border: 1px solid #d1d5db !important;
+          border-radius: 4pt !important;
+          padding: 0.3cm !important;
+          margin: 0.2cm 0 !important;
+          box-shadow: none !important;
         }
         
-        /* Gradient backgrounds for print - use solid colors with good contrast */
-        .bg-gradient-primary {
-          background: #2563eb !important;
-          color: white !important;
+        /* Blue cards */
+        .bg-primary-50, .bg-blue-50 {
+          background: #eff6ff !important;
+          border: 1px solid #3b82f6 !important;
         }
-        .bg-gradient-secondary {
-          background: #0ea5e9 !important;
-          color: white !important;
+        
+        /* Text colors for print */
+        .text-primary-600, .text-blue-600 {
+          color: #2563eb !important;
         }
-        .bg-gradient-accent {
-          background: #7c3aed !important;
-          color: white !important;
+        
+        .text-accent-600 {
+          color: #0891b2 !important;
         }
-        .bg-gradient-success {
-          background: #059669 !important;
-          color: white !important;
+        
+        .text-gray-600 {
+          color: #4b5563 !important;
         }
-        .bg-gradient-purple-red {
-          background: #7c3aed !important;
-          color: white !important;
+        
+        /* Charts container */
+        .chart-container {
+          width: 100% !important;
+          height: 8cm !important; /* Fixed height for charts */
+          max-height: 8cm !important;
+          margin: 0.3cm 0 !important;
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
+        }
+        
+        /* Chart canvas */
+        canvas {
+          max-width: 100% !important;
+          max-height: 8cm !important;
+          height: auto !important;
         }
         
         /* Tables */
         table {
-          border-collapse: collapse;
-          width: 100%;
-          margin: 0.5cm 0;
-          font-size: 11pt;
+          width: 100% !important;
+          border-collapse: collapse !important;
+          font-size: 10pt !important;
+          margin: 0.2cm 0 !important;
         }
         
         th, td {
-          border: 1px solid #000 !important;
-          padding: 0.3cm;
-          text-align: left;
-          color: #000 !important;
+          border: 1px solid #d1d5db !important;
+          padding: 0.1cm !important;
+          text-align: left !important;
+          vertical-align: top !important;
         }
         
         th {
-          background: #f0f0f0 !important;
+          background: #f3f4f6 !important;
           font-weight: bold !important;
         }
         
-        /* Charts - ensure they're visible */
-        canvas {
-          max-width: 90% !important;
-          max-height: 50vh !important;
-          display: block !important;
-          margin: 0.5cm auto !important;
-          border: 1px solid #ddd;
+        /* Calculation flows */
+        .calculation-step {
+          background: #f8fafc !important;
+          border: 1px solid #cbd5e1 !important;
+          padding: 0.2cm !important;
+          margin: 0.1cm 0 !important;
+          text-align: center !important;
+          font-size: 11pt !important;
         }
         
-        /* Grid layouts for print */
-        .grid {
-          display: block !important;
+        .result-highlight {
+          background: #22c55e !important;
+          color: white !important;
+          font-weight: bold !important;
+          padding: 0.2cm !important;
+          text-align: center !important;
         }
         
-        .grid > * {
-          margin-bottom: 0.5cm;
-          break-inside: avoid;
-        }
-        
-        /* Fix font sizes for readability */
-        .text-xl { font-size: 16pt !important; }
-        .text-2xl { font-size: 18pt !important; }
-        .text-3xl { font-size: 24pt !important; }
-        .text-4xl { font-size: 28pt !important; }
-        .text-5xl { font-size: 36pt !important; }
-        .text-6xl { font-size: 48pt !important; }
-        
-        /* Ensure proper spacing */
-        .mb-4, .mb-6, .mb-8 { margin-bottom: 0.5cm !important; }
-        .mt-4, .mt-6, .mt-8 { margin-top: 0.5cm !important; }
-        
-        /* Hide animations and transitions */
+        /* Remove all animations and transitions */
         * {
           animation: none !important;
           transition: none !important;
+        }
+        
+        /* Force text to be readable */
+        p, div, span, li {
+          color: #000 !important;
+          font-size: 11pt !important;
+          line-height: 1.3 !important;
+        }
+        
+        /* Lists */
+        ul, ol {
+          margin: 0.2cm 0 !important;
+          padding-left: 0.5cm !important;
+        }
+        
+        li {
+          margin: 0.1cm 0 !important;
+        }
+        
+        /* Process comparison boxes */
+        .process-box {
+          border: 2px solid #3b82f6 !important;
+          background: white !important;
+          padding: 0.3cm !important;
+          margin: 0.2cm !important;
+          border-radius: 4pt !important;
+        }
+        
+        .process-box.saarland {
+          border-color: #0891b2 !important;
+        }
+        
+        /* Flow diagram */
+        .flow-step {
+          background: #f1f5f9 !important;
+          border: 1px solid #94a3b8 !important;
+          padding: 0.2cm !important;
+          margin: 0.1cm 0 !important;
+          text-align: center !important;
+          font-size: 10pt !important;
+        }
+        
+        /* Ensure no content bleeds outside slides */
+        .slide {
+          position: relative !important;
+          overflow: hidden !important;
+        }
+        
+        /* Hide any overflow content */
+        .slide::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 0.2cm;
+          background: white;
+          z-index: 1000;
         }
       }
 
@@ -931,6 +995,8 @@
       }
 
       function exportPDF() {
+        console.log('Starting PDF export with improved timing...');
+        
         // First, show all slides for printing
         for (let i = 0; i < totalSlides; i++) {
           const slide = document.getElementById(`slide-${i}`);
@@ -949,10 +1015,16 @@
         // Add print class to body
         document.body.classList.add('printing');
         
-        // Wait a moment for charts to be fully visible, then print
+        // Force charts to re-render by triggering a resize event
         setTimeout(() => {
-          window.print();
-        }, 1000);
+          window.dispatchEvent(new Event('resize'));
+          
+          // Wait additional time for charts to fully render
+          setTimeout(() => {
+            console.log('Charts should be rendered, starting print...');
+            window.print();
+          }, 2000); // Increased delay
+        }, 500);
         
         // After print dialog closes, restore normal view
         setTimeout(() => {
@@ -960,7 +1032,9 @@
           for (let i = 0; i < totalSlides; i++) {
             const slide = document.getElementById(`slide-${i}`);
             if (slide) {
-              slide.style.display = i === currentSlide ? 'flex' : 'none';
+              if (i !== currentSlide) {
+                slide.style.display = 'none';
+              }
               slide.classList.remove('print-visible');
             }
           }
@@ -972,7 +1046,9 @@
           
           // Remove print class
           document.body.classList.remove('printing');
-        }, 2000);
+          
+          console.log('PDF export completed, view restored');
+        }, 10000); // Give more time for print dialog
       }
 
       // Keyboard navigation
