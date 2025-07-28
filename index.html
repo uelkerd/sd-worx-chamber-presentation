@@ -53,10 +53,10 @@
     </script>
     <style>
         .slide {
-            display: none;
+            display: none !important;
         }
         .slide.active {
-            display: block;
+            display: flex !important;
         }
         .fade-in {
             animation: fadeIn 0.5s ease-in;
@@ -426,13 +426,25 @@
         const totalSlides = 5;
 
         function showSlide(n) {
+            console.log('Showing slide:', n);
+            
             // Hide all slides
             for (let i = 0; i < totalSlides; i++) {
-                document.getElementById(`slide-${i}`).classList.remove('active');
+                const slide = document.getElementById(`slide-${i}`);
+                if (slide) {
+                    slide.classList.remove('active');
+                    console.log('Hiding slide:', i);
+                }
             }
             
             // Show current slide
-            document.getElementById(`slide-${n}`).classList.add('active');
+            const currentSlideElement = document.getElementById(`slide-${n}`);
+            if (currentSlideElement) {
+                currentSlideElement.classList.add('active');
+                console.log('Showing slide:', n);
+            } else {
+                console.error('Slide not found:', n);
+            }
             
             // Update navigation buttons
             updateNavigation();

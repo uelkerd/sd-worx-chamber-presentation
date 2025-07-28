@@ -472,7 +472,7 @@ const App = () => {
                   <div className="space-y-4">
                     <div>
                       <h4 className="text-accent-600 mb-2 font-bold">Technische Implementierung</h4>
-                      <p className="text-gray-700 text-sm">Separate Berechnungsmodule für beide Systeme entwickeln, BBG-Monitoring für Saarland implementieren</p>
+                      <p className="text-gray-700 text-sm">Separate Berechnungsmodules für beide Systeme entwickeln, BBG-Monitoring für Saarland implementieren</p>
                     </div>
                     <div>
                       <h4 className="text-accent-600 mb-2 font-bold">Compliance-Management</h4>
