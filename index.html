@@ -52,11 +52,20 @@
         }
     </script>
     <style>
+        /* Cache-busting timestamp: 2025-07-28 14:15 */
         .slide {
             display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            z-index: -1 !important;
         }
         .slide.active {
             display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            z-index: 1 !important;
         }
         .fade-in {
             animation: fadeIn 0.5s ease-in;
@@ -422,32 +431,54 @@
     </div>
 
     <script>
+        // Version: 2025-07-28 14:15
         let currentSlide = 0;
         const totalSlides = 5;
 
         function showSlide(n) {
             console.log('Showing slide:', n);
+            document.title = `SD WORX - Slide ${n+1}/5`;
             
-            // Hide all slides
+            // Force-hide all slides with inline styles
             for (let i = 0; i < totalSlides; i++) {
                 const slide = document.getElementById(`slide-${i}`);
                 if (slide) {
                     slide.classList.remove('active');
+                    slide.style.display = 'none';
+                    slide.style.opacity = '0';
+                    slide.style.visibility = 'hidden';
+                    slide.style.position = 'absolute';
+                    slide.style.zIndex = '-1';
                     console.log('Hiding slide:', i);
                 }
             }
             
-            // Show current slide
+            // Force-show current slide with inline styles
             const currentSlideElement = document.getElementById(`slide-${n}`);
             if (currentSlideElement) {
                 currentSlideElement.classList.add('active');
+                currentSlideElement.style.display = 'flex';
+                currentSlideElement.style.opacity = '1';
+                currentSlideElement.style.visibility = 'visible';
+                currentSlideElement.style.position = 'relative';
+                currentSlideElement.style.zIndex = '1';
                 console.log('Showing slide:', n);
+                
+                // Scroll to top of slide
+                window.scrollTo(0, 0);
             } else {
                 console.error('Slide not found:', n);
             }
             
             // Update navigation buttons
             updateNavigation();
+            
+            // Store current slide in sessionStorage
+            try {
+                sessionStorage.setItem('currentSlide', n);
+            } catch (e) {
+                console.error('Session storage error:', e);
+            }
         }
 
         function updateNavigation() {
@@ -499,8 +530,16 @@
             }
         });
 
-        // Initialize
-        showSlide(0);
+        // Initialize - try to restore from session storage
+        try {
+            const savedSlide = sessionStorage.getItem('currentSlide');
+            if (savedSlide !== null) {
+                currentSlide = parseInt(savedSlide, 10);
+            }
+        } catch (e) {
+            console.error('Session storage error:', e);
+        }
+        showSlide(currentSlide);
     </script>
 </body>
 </html> 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigation Test</title>
+    <style>
+        .slide {
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Navigation Test</h1>
+    <div class="navigation">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+    
+    <div id="slide-0" class="slide active bg-white p-8 rounded-lg shadow-lg mb-4">
+        <h2>Slide 1</h2>
+        <p>This is the first slide.</p>
+    </div>
+    
+    <div id="slide-1" class="slide bg-white p-8 rounded-lg shadow-lg mb-4">
+        <h2>Slide 2</h2>
+        <p>This is the second slide.</p>
+    </div>
+    
+    <div id="slide-2" class="slide bg-white p-8 rounded-lg shadow-lg mb-4">
+        <h2>Slide 3</h2>
+        <p>This is the third slide.</p>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 3;
+        
+        function showSlide(n) {
+            // Hide all slides
+            for (let i = 0; i < totalSlides; i++) {
+                document.getElementById(`slide-${i}`).classList.remove('active');
+                document.getElementById(`slide-${i}`).style.display = 'none';
+            }
+            
+            // Show current slide
+            document.getElementById(`slide-${n}`).classList.add('active');
+            document.getElementById(`slide-${n}`).style.display = 'block';
+            
+            console.log('Current slide:', n);
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html> 
