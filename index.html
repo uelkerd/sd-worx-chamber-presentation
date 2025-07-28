@@ -1,545 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SD WORX - Kammerbeiträge Bremen vs. Saarland 2025</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                        },
-                        secondary: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        accent: {
-                            50: '#fdf4ff',
-                            100: '#fae8ff',
-                            200: '#f5d0fe',
-                            300: '#f0abfc',
-                            400: '#e879f9',
-                            500: '#d946ef',
-                            600: '#c026d3',
-                            700: '#a21caf',
-                            800: '#86198f',
-                            900: '#701a75',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <meta http-equiv="refresh" content="0;url=presentation.html" />
     <style>
-        /* Cache-busting timestamp: 2025-07-28 14:15 */
-        .slide {
-            display: none !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            position: absolute !important;
-            z-index: -1 !important;
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+          'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2563eb;
+        margin-top: 0;
+      }
+      p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #4b5563;
+      }
+      .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #2563eb;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-        .slide.active {
-            display: flex !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            position: relative !important;
-            z-index: 1 !important;
+        100% {
+          transform: rotate(360deg);
         }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .card {
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
+      }
+      .link {
+        color: #2563eb;
+        font-weight: bold;
+        text-decoration: none;
+      }
     </style>
-</head>
-<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
-    <!-- Navigation -->
-    <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div class="bg-white rounded-full shadow-lg px-6 py-3 flex items-center space-x-4">
-            <button onclick="prevSlide()" class="bg-primary-600 text-white rounded-full p-2 hover:bg-primary-700 transition-colors">
-                ←
-            </button>
-            <div class="flex space-x-2">
-                <button onclick="goToSlide(0)" class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"></button>
-                <button onclick="goToSlide(1)" class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"></button>
-                <button onclick="goToSlide(2)" class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"></button>
-                <button onclick="goToSlide(3)" class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"></button>
-                <button onclick="goToSlide(4)" class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"></button>
-            </div>
-            <button onclick="nextSlide()" class="bg-primary-600 text-white rounded-full p-2 hover:bg-primary-700 transition-colors">
-                →
-            </button>
-            <button onclick="exportPDF()" class="bg-accent-600 text-white rounded-full px-4 py-2 hover:bg-accent-700 transition-colors">
-                📄 PDF
-            </button>
-        </div>
-    </nav>
-
-    <!-- Slide 1: Title -->
-    <div id="slide-0" class="slide active min-h-screen flex items-center justify-center p-8">
-        <div class="text-center max-w-4xl mx-auto">
-            <div class="fade-in">
-                <h1 class="text-6xl md:text-8xl font-black text-primary-600 mb-8">
-                    Kammerbeiträge
-                </h1>
-                <h2 class="text-4xl md:text-6xl font-bold text-secondary-600 mb-12">
-                    Bremen vs. Saarland 2025
-                </h2>
-                <div class="bg-white rounded-3xl p-8 shadow-2xl mb-8">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Rechtsvergleichende Systemanalyse</h3>
-                    <p class="text-lg text-gray-600 leading-relaxed">
-                        Eine detaillierte Analyse der fundamentalen Unterschiede zwischen den Kammerbeitragssystemen 
-                        in Bremen und Saarland für das Jahr 2025.
-                    </p>
-                </div>
-                <div class="text-gray-500 text-sm">
-                    <p>SD WORX Job Application - Phase 2</p>
-                    <p>Rechtsstand: 2025</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 2: Executive Summary -->
-    <div id="slide-1" class="slide min-h-screen flex items-center justify-center p-8">
-        <div class="max-w-6xl mx-auto w-full">
-            <div class="fade-in">
-                <h1 class="text-5xl font-black text-center text-gray-800 mb-12">Executive Summary</h1>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div class="card bg-white rounded-3xl p-8 shadow-2xl border-l-4 border-primary-500">
-                        <h3 class="text-2xl font-bold text-primary-600 mb-4">Bremen (Arbeitnehmerkammer)</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="font-semibold">Beitragssatz:</span>
-                                <span class="text-primary-600 font-bold">0,12%</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-semibold">Bemessungsgrundlage:</span>
-                                <span class="text-primary-600">Steuerpflichtiger Arbeitslohn</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-semibold">BBG:</span>
-                                <span class="text-primary-600">Keine Obergrenze</span>
-                            </div>
-                            <div class="bg-primary-100 p-4 rounded-lg mt-4">
-                                <div class="text-center">
-                                    <span class="text-2xl font-black text-primary-700">€12,00</span>
-                                    <p class="text-sm text-primary-600">Monatlicher Beitrag bei €10.000</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card bg-white rounded-3xl p-8 shadow-2xl border-l-4 border-secondary-500">
-                        <h3 class="text-2xl font-bold text-secondary-600 mb-4">Saarland (Arbeitskammer)</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="font-semibold">Beitragssatz:</span>
-                                <span class="text-secondary-600 font-bold">0,15%</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-semibold">Bemessungsgrundlage:</span>
-                                <span class="text-secondary-600">SV-pflichtiges Bruttoentgelt</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="font-semibold">BBG:</span>
-                                <span class="text-secondary-600">€8.050 (2025)</span>
-                            </div>
-                            <div class="bg-secondary-100 p-4 rounded-lg mt-4">
-                                <div class="text-center">
-                                    <span class="text-2xl font-black text-secondary-700">€12,08</span>
-                                    <p class="text-sm text-secondary-600">Monatlicher Beitrag bei €10.000</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-yellow-100 border-l-4 border-yellow-500 p-6 rounded-lg">
-                    <h4 class="text-lg font-bold text-yellow-800 mb-2">Wichtiger Hinweis</h4>
-                    <p class="text-yellow-700">
-                        Die minimale nominale Differenz von €0,08 verschleiert fundamentale Systemunterschiede. 
-                        Bremen verwendet ein proportionales System ohne Obergrenze, während Saarland ein degressives 
-                        System mit Beitragsbemessungsgrenze implementiert.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 3: Detailed Calculations -->
-    <div id="slide-2" class="slide min-h-screen flex items-center justify-center p-8">
-        <div class="max-w-6xl mx-auto w-full">
-            <div class="fade-in">
-                <h1 class="text-5xl font-black text-center text-gray-800 mb-12">Berechnungsdetails & Prozessfluss</h1>
-                
-                <div class="grid md:grid-cols-2 gap-8 mb-12">
-                    <div class="card bg-white rounded-3xl p-8 shadow-2xl border-l-4 border-primary-500">
-                        <h3 class="text-2xl font-bold text-primary-600 mb-6">Bremen - Berechnung</h3>
-                        <div class="space-y-4 text-lg">
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Bruttogehalt:</span>
-                                <span class="text-primary-600 font-bold">€10.000</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Bemessungsgrundlage:</span>
-                                <span class="text-primary-600 font-bold">€10.000 (ungekürzt)</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Beitragssatz:</span>
-                                <span class="text-primary-600 font-bold">0,12%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-4 bg-gradient-to-r from-primary-100 to-primary-200 rounded-lg border-2 border-primary-300">
-                                <span class="font-bold text-lg">Monatlicher Beitrag:</span>
-                                <span class="text-2xl font-black text-primary-700">€12,00</span>
-                            </div>
-                        </div>
-                        <div class="mt-6 p-4 bg-gray-100 rounded-xl text-sm">
-                            <strong>Rechtsbasis:</strong> Steuerpflichtiger Arbeitslohn nach LStDV
-                        </div>
-                    </div>
-
-                    <div class="card bg-white rounded-3xl p-8 shadow-2xl border-l-4 border-secondary-500">
-                        <h3 class="text-2xl font-bold text-secondary-600 mb-6">Saarland - Berechnung</h3>
-                        <div class="space-y-4 text-lg">
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Bruttogehalt:</span>
-                                <span class="text-secondary-600 font-bold">€10.000</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-orange-100 rounded-lg border border-orange-300">
-                                <span class="font-semibold">BBG-Prüfung:</span>
-                                <span class="text-orange-700 font-bold">&gt; €8.050 → gedeckelt</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Bemessungsgrundlage:</span>
-                                <span class="text-secondary-600 font-bold">€8.050</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Beitragssatz:</span>
-                                <span class="text-secondary-600 font-bold">0,15%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                                <span class="font-semibold">Vor Rundung:</span>
-                                <span class="text-secondary-600 font-bold">€12,075</span>
-                            </div>
-                            <div class="flex justify-between items-center p-4 bg-gradient-to-r from-secondary-100 to-secondary-200 rounded-lg border-2 border-secondary-300">
-                                <span class="font-bold text-lg">Monatlicher Beitrag:</span>
-                                <span class="text-2xl font-black text-secondary-700">€12,08</span>
-                            </div>
-                        </div>
-                        <div class="mt-6 p-4 bg-gray-100 rounded-xl text-sm">
-                            <strong>Rechtsbasis:</strong> SV-pflichtiges Bruttoentgelt nach SGB IV
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="text-3xl font-bold text-center mb-8">Berechnungsfluss im Detail</h3>
-                <div class="grid md:grid-cols-2 gap-12">
-                    <div class="space-y-4">
-                        <h4 class="text-primary-600 text-xl font-bold text-center mb-6">Bremen-Pfad</h4>
-                        <div class="space-y-4">
-                            <div class="bg-white border-3 border-primary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Bruttogehalt: €10.000</strong>
-                            </div>
-                            <div class="bg-white border-3 border-primary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Steuerpflichtiger Arbeitslohn</strong>
-                            </div>
-                            <div class="bg-white border-3 border-primary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Keine BBG-Prüfung: €10.000</strong>
-                            </div>
-                            <div class="bg-white border-3 border-primary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>€10.000 × 0,12%</strong>
-                            </div>
-                            <div class="bg-gradient-to-br from-green-500 to-green-600 text-white border-3 border-green-600 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Ergebnis: €12,00</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <h4 class="text-secondary-600 text-xl font-bold text-center mb-6">Saarland-Pfad</h4>
-                        <div class="space-y-4">
-                            <div class="bg-white border-3 border-secondary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Bruttogehalt: €10.000</strong>
-                            </div>
-                            <div class="bg-white border-3 border-secondary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>SV-pflichtiges Bruttoentgelt</strong>
-                            </div>
-                            <div class="bg-orange-500 text-white border-3 border-orange-600 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>BBG-Prüfung: €10.000 > €8.050</strong>
-                            </div>
-                            <div class="bg-white border-3 border-secondary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Gedeckelt: €8.050</strong>
-                            </div>
-                            <div class="bg-white border-3 border-secondary-500 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>€8.050 × 0,15% = €12,075</strong>
-                            </div>
-                            <div class="bg-gradient-to-br from-green-500 to-green-600 text-white border-3 border-green-600 rounded-xl p-4 text-center text-lg shadow-lg">
-                                <strong>Ergebnis: €12,08</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 4: System Analysis -->
-    <div id="slide-3" class="slide min-h-screen flex items-center justify-center p-8">
-        <div class="max-w-6xl mx-auto w-full">
-            <div class="fade-in">
-                <h1 class="text-5xl font-black text-center text-gray-800 mb-12">Systemanalyse & Vergleich</h1>
-                
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-8">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
-                                <th class="p-4 text-left text-lg">Bruttogehalt</th>
-                                <th class="p-4 text-left text-lg">Bremen (0,12%)</th>
-                                <th class="p-4 text-left text-lg">Saarland (0,15%)</th>
-                                <th class="p-4 text-left text-lg">Differenz</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="p-4 font-semibold">€5.000</td>
-                                <td class="p-4 text-primary-600 font-bold">€6,00</td>
-                                <td class="p-4 text-secondary-600 font-bold">€7,50</td>
-                                <td class="p-4 font-bold text-secondary-600">+€1,50 SL</td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50 bg-yellow-100">
-                                <td class="p-4 font-semibold">€10.000</td>
-                                <td class="p-4 text-primary-600 font-bold">€12,00</td>
-                                <td class="p-4 text-secondary-600 font-bold">€12,08</td>
-                                <td class="p-4 font-bold text-secondary-600">+€0,08 SL</td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="p-4 font-semibold">€15.000</td>
-                                <td class="p-4 text-primary-600 font-bold">€18,00</td>
-                                <td class="p-4 text-secondary-600 font-bold">€12,08</td>
-                                <td class="p-4 font-bold text-primary-600">-€5,92 HB</td>
-                            </tr>
-                            <tr class="border-b hover:bg-gray-50">
-                                <td class="p-4 font-semibold">€20.000</td>
-                                <td class="p-4 text-primary-600 font-bold">€24,00</td>
-                                <td class="p-4 text-secondary-600 font-bold">€12,08</td>
-                                <td class="p-4 font-bold text-primary-600">-€11,92 HB</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card bg-gradient-to-br from-primary-500 to-primary-700 text-white p-6 rounded-2xl shadow-xl">
-                        <h4 class="text-xl mb-3 font-bold">Bremen: Proportional</h4>
-                        <p class="text-sm leading-relaxed">
-                            Konstanter Beitragssatz von 0,12% auf das gesamte Gehalt. Die Belastung steigt linear mit dem Einkommen.
-                        </p>
-                    </div>
-                    <div class="card bg-gradient-to-br from-secondary-500 to-secondary-700 text-white p-6 rounded-2xl shadow-xl">
-                        <h4 class="text-xl mb-3 font-bold">Saarland: Degressiv</h4>
-                        <p class="text-sm leading-relaxed">
-                            Effektiver Beitragssatz sinkt bei Einkommen über €8.050. Bei €20.000 nur noch 0,06% effektive Belastung.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 5: Conclusions -->
-    <div id="slide-4" class="slide min-h-screen flex items-center justify-center p-8">
-        <div class="max-w-6xl mx-auto w-full">
-            <div class="fade-in">
-                <h1 class="text-5xl font-black text-center text-gray-800 mb-12">Systemunterschiede & Fazit</h1>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="card bg-white rounded-2xl p-8 shadow-2xl">
-                        <h3 class="text-primary-600 text-2xl mb-6 font-bold">1. Beitragsbemessungsgrenze</h3>
-                        <div class="space-y-4">
-                            <div class="bg-primary-50 p-4 rounded-xl border-l-4 border-primary-500">
-                                <strong class="text-primary-700">Bremen:</strong> Unbegrenzt proportional<br />
-                                <small class="text-gray-600">Prinzip der steuerlichen Leistungsfähigkeit</small>
-                            </div>
-                            <div class="bg-secondary-50 p-4 rounded-xl border-l-4 border-secondary-500">
-                                <strong class="text-secondary-700">Saarland:</strong> Gedeckelt bei €8.050<br />
-                                <small class="text-gray-600">Degressive Entlastung für Besserverdienende</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card bg-white rounded-2xl p-8 shadow-2xl">
-                        <h3 class="text-secondary-600 text-2xl mb-6 font-bold">2. Rechtssystematische Anbindung</h3>
-                        <div class="space-y-4">
-                            <div class="bg-primary-50 p-4 rounded-xl border-l-4 border-primary-500">
-                                <strong class="text-primary-700">Bremen:</strong> Steuerrecht (LStDV)<br />
-                                <small class="text-gray-600">Integration in Lohnsteuerverfahren</small>
-                            </div>
-                            <div class="bg-secondary-50 p-4 rounded-xl border-l-4 border-secondary-500">
-                                <strong class="text-secondary-700">Saarland:</strong> Sozialversicherungsrecht (SGB IV)<br />
-                                <small class="text-gray-600">Anbindung an SV-Systematik</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 text-white p-8 rounded-3xl text-center shadow-2xl mb-8">
-                    <h4 class="text-2xl mb-4 font-bold">Strategische Schlussfolgerung</h4>
-                    <p class="text-lg leading-relaxed">
-                        Die Existenz zweier fundamental verschiedener Kammersysteme in Deutschland unterstreicht die Notwendigkeit 
-                        flexibler, rechtssystemspezifischer Lösungsarchitekturen für internationale Payroll-Anbieter wie SD WORX.
-                    </p>
-                </div>
-
-                <div class="text-center text-gray-600 text-sm">
-                    © 2025 SD WORX Analyse | Rechtsstand: 2025 | Quellen: ArbnkG Bremen, AKG Saarland, SV-Rechengrößenverordnung 2025
-                </div>
-            </div>
-        </div>
+  </head>
+  <body>
+    <div class="container">
+      <h1>SD WORX - Kammerbeiträge</h1>
+      <div class="loader"></div>
+      <p>Sie werden zur Präsentation weitergeleitet...</p>
+      <p>
+        Falls die Weiterleitung nicht funktioniert,
+        <a href="presentation.html" class="link">klicken Sie hier</a>.
+      </p>
     </div>
 
     <script>
-        // Version: 2025-07-28 14:15
-        let currentSlide = 0;
-        const totalSlides = 5;
-
-        function showSlide(n) {
-            console.log('Showing slide:', n);
-            document.title = `SD WORX - Slide ${n+1}/5`;
-            
-            // Force-hide all slides with inline styles
-            for (let i = 0; i < totalSlides; i++) {
-                const slide = document.getElementById(`slide-${i}`);
-                if (slide) {
-                    slide.classList.remove('active');
-                    slide.style.display = 'none';
-                    slide.style.opacity = '0';
-                    slide.style.visibility = 'hidden';
-                    slide.style.position = 'absolute';
-                    slide.style.zIndex = '-1';
-                    console.log('Hiding slide:', i);
-                }
-            }
-            
-            // Force-show current slide with inline styles
-            const currentSlideElement = document.getElementById(`slide-${n}`);
-            if (currentSlideElement) {
-                currentSlideElement.classList.add('active');
-                currentSlideElement.style.display = 'flex';
-                currentSlideElement.style.opacity = '1';
-                currentSlideElement.style.visibility = 'visible';
-                currentSlideElement.style.position = 'relative';
-                currentSlideElement.style.zIndex = '1';
-                console.log('Showing slide:', n);
-                
-                // Scroll to top of slide
-                window.scrollTo(0, 0);
-            } else {
-                console.error('Slide not found:', n);
-            }
-            
-            // Update navigation buttons
-            updateNavigation();
-            
-            // Store current slide in sessionStorage
-            try {
-                sessionStorage.setItem('currentSlide', n);
-            } catch (e) {
-                console.error('Session storage error:', e);
-            }
-        }
-
-        function updateNavigation() {
-            const buttons = document.querySelectorAll('.slide-btn');
-            buttons.forEach((btn, index) => {
-                if (index === currentSlide) {
-                    btn.classList.remove('bg-gray-300');
-                    btn.classList.add('bg-primary-600');
-                } else {
-                    btn.classList.remove('bg-primary-600');
-                    btn.classList.add('bg-gray-300');
-                }
-            });
-        }
-
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                showSlide(currentSlide);
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                showSlide(currentSlide);
-            }
-        }
-
-        function goToSlide(n) {
-            currentSlide = n;
-            showSlide(currentSlide);
-        }
-
-        function exportPDF() {
-            alert('PDF Export: Verwenden Sie die Druckfunktion Ihres Browsers (Strg+P) um die Präsentation als PDF zu exportieren.');
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                prevSlide();
-            } else if (e.key === 'Escape') {
-                goToSlide(0);
-            }
-        });
-
-        // Initialize - try to restore from session storage
-        try {
-            const savedSlide = sessionStorage.getItem('currentSlide');
-            if (savedSlide !== null) {
-                currentSlide = parseInt(savedSlide, 10);
-            }
-        } catch (e) {
-            console.error('Session storage error:', e);
-        }
-        showSlide(currentSlide);
+      // Force cache busting by adding a timestamp to the URL
+      window.onload = function () {
+        const timestamp = new Date().getTime();
+        window.location.href = `presentation.html?t=${timestamp}`;
+      };
     </script>
-</body>
-</html> 
+  </body>
+</html>
