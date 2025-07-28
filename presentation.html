@@ -800,9 +800,10 @@
     </div>
 
     <script>
-      // Version: 2025-07-28 16:30
+      // Version: 2025-07-28 17:00
       let currentSlide = 0;
       const totalSlides = 6;
+      let charts = []; // Store chart instances
 
       function showSlide(n) {
         console.log('Showing slide:', n);
@@ -872,7 +873,6 @@
       }
 
       async function exportPDF() {
-        // Show loading indicator
         const loadingEl = document.createElement('div');
         loadingEl.className =
           'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
@@ -886,19 +886,20 @@
         document.body.appendChild(loadingEl);
 
         try {
-          // Remember current slide
-          const originalSlide = currentSlide;
-
-          // Create a container for all slides
           const pdfContainer = document.createElement('div');
           pdfContainer.id = 'pdf-container';
           pdfContainer.style.position = 'absolute';
           pdfContainer.style.left = '-9999px';
           pdfContainer.style.top = '0';
-          pdfContainer.style.width = '1200px'; // Fixed width for better rendering
+          pdfContainer.style.width = '1200px';
           document.body.appendChild(pdfContainer);
 
-          // Clone all slides and make them visible
+          // Convert charts to images before cloning
+          const chartImages = [];
+          for (const chart of charts) {
+            chartImages.push(chart.toBase64Image());
+          }
+
           for (let i = 0; i < totalSlides; i++) {
             const slide = document.getElementById(`slide-${i}`);
             const slideClone = slide.cloneNode(true);
@@ -908,134 +909,37 @@
             slideClone.style.height = '100vh';
             slideClone.style.width = '100%';
             pdfContainer.appendChild(slideClone);
+
+            // Replace canvases with images
+            const canvases = slideClone.querySelectorAll('canvas');
+            canvases.forEach((canvas, index) => {
+              const chartIndex = charts.findIndex(c => c.canvas.id === canvas.id);
+              if (chartIndex !== -1) {
+                const img = document.createElement('img');
+                img.src = chartImages[chartIndex];
+                img.style.width = '100%';
+                img.style.height = '100%';
+                canvas.parentNode.replaceChild(img, canvas);
+              }
+            });
           }
-
-          // Remove navigation from PDF
-          const navElements = pdfContainer.querySelectorAll('nav');
-          navElements.forEach(nav => nav.remove());
-
-          // Re-render charts in the PDF container
-          await new Promise(resolve => {
-            setTimeout(() => {
-              // Chart 1: Contribution by Salary
-              const contributionCanvas = pdfContainer.querySelector('#contributionChart');
-              if (contributionCanvas) {
-                new Chart(contributionCanvas, {
-                  type: 'line',
-                  data: {
-                    labels: ['€5.000', '€8.050', '€10.000', '€15.000', '€20.000', '€25.000', '€30.000'],
-                    datasets: [
-                      {
-                        label: 'Bremen (unbegrenzt)',
-                        data: [6, 9.66, 12, 18, 24, 30, 36],
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        fill: true,
-                        tension: 0.1
-                      },
-                      {
-                        label: 'Saarland (gedeckelt)',
-                        data: [7.5, 12.08, 12.08, 12.08, 12.08, 12.08, 12.08],
-                        borderColor: '#0ea5e9',
-                        backgroundColor: 'rgba(14, 165, 233, 0.1)',
-                        fill: true,
-                        tension: 0.1
-                      }
-                    ]
-                  },
-                  options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: false, // Disable animations for PDF
-                    scales: {
-                      y: {
-                        beginAtZero: true,
-                        title: {
-                          display: true,
-                          text: 'Beitrag in €'
-                        }
-                      }
-                    }
-                  }
-                });
-              }
-              
-              // Chart 2: Effective Rate
-              const effectiveRateCanvas = pdfContainer.querySelector('#effectiveRateChart');
-              if (effectiveRateCanvas) {
-                new Chart(effectiveRateCanvas, {
-                  type: 'line',
-                  data: {
-                    labels: ['€5.000', '€8.050', '€10.000', '€15.000', '€20.000', '€25.000', '€30.000'],
-                    datasets: [
-                      {
-                        label: 'Bremen (proportional)',
-                        data: [0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12],
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.1
-                      },
-                      {
-                        label: 'Saarland (degressiv)',
-                        data: [0.15, 0.15, 0.12, 0.08, 0.06, 0.048, 0.04],
-                        borderColor: '#0ea5e9',
-                        backgroundColor: 'rgba(14, 165, 233, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.1
-                      }
-                    ]
-                  },
-                  options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: false, // Disable animations for PDF
-                    scales: {
-                      y: {
-                        beginAtZero: true,
-                        title: {
-                          display: true,
-                          text: 'Effektiver Beitragssatz in %'
-                        },
-                        ticks: {
-                          callback: function(value) {
-                            return value.toFixed(2) + '%';
-                          }
-                        }
-                      }
-                    }
-                  }
-                });
-              }
-              
-              // Wait a bit for charts to render
-              setTimeout(resolve, 1000);
-            }, 500);
-          });
-
-          // Configure PDF options
+          
           const opt = {
             margin: [0.5, 0.5, 0.5, 0.5],
             filename: 'SD_WORX_Kammerbeitraege_Bremen_vs_Saarland_2025.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-              scale: 2, 
-              useCORS: true, 
+            html2canvas: {
+              scale: 2,
+              useCORS: true,
               letterRendering: true,
               allowTaint: true,
-              foreignObjectRendering: true
             },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
           };
 
-          // Generate PDF with a delay to ensure charts are fully rendered
-          await new Promise(resolve => setTimeout(resolve, 500));
           await html2pdf().from(pdfContainer).set(opt).save();
 
-          // Clean up
           document.body.removeChild(pdfContainer);
-
-          // Show success message
           loadingEl.innerHTML = `
             <div class="bg-white p-6 rounded-xl shadow-2xl text-center">
               <div class="bg-green-100 p-2 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
@@ -1048,17 +952,14 @@
               <button class="mt-4 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors" onclick="document.body.removeChild(this.parentNode.parentNode.parentNode)">Schließen</button>
             </div>
           `;
-
-          // Auto-close the success message after 3 seconds
           setTimeout(() => {
             if (document.body.contains(loadingEl)) {
               document.body.removeChild(loadingEl);
             }
           }, 3000);
+
         } catch (error) {
           console.error('PDF export error:', error);
-
-          // Show error message
           loadingEl.innerHTML = `
             <div class="bg-white p-6 rounded-xl shadow-2xl text-center">
               <div class="bg-red-100 p-2 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
@@ -1101,12 +1002,16 @@
       // Chart initialization function
       function initializeCharts() {
         console.log('Initializing charts...');
+        
+        // Clear existing charts
+        charts.forEach(chart => chart.destroy());
+        charts = [];
 
         // Chart 1: Kammerbeiträge über verschiedene Gehaltsstufen
         const ctx1 = document.getElementById('contributionChart');
         if (ctx1) {
           console.log('Found contributionChart, initializing...');
-          new Chart(ctx1, {
+          const chart1 = new Chart(ctx1, {
             type: 'line',
             data: {
               labels: ['€5.000', '€8.050', '€10.000', '€15.000', '€20.000', '€25.000', '€30.000'],
@@ -1148,6 +1053,7 @@
               },
             },
           });
+          charts.push(chart1);
         } else {
           console.log('contributionChart element not found');
         }
@@ -1156,7 +1062,7 @@
         const ctx2 = document.getElementById('effectiveRateChart');
         if (ctx2) {
           console.log('Found effectiveRateChart, initializing...');
-          new Chart(ctx2, {
+          const chart2 = new Chart(ctx2, {
             type: 'line',
             data: {
               labels: ['€5.000', '€8.050', '€10.000', '€15.000', '€20.000', '€25.000', '€30.000'],
@@ -1203,6 +1109,7 @@
               },
             },
           });
+          charts.push(chart2);
         } else {
           console.log('effectiveRateChart element not found');
         }
