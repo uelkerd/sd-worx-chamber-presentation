@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Beautiful presentation about chamber contributions comparison",
   "main": "index.js",
-  "homepage": "https://minervae.github.io/sd-worx-chamber-presentation",
+  "homepage": "https://uelkerd.github.io/sd-worx-chamber-presentation",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
