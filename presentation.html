@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SD WORX - Kammerbeiträge Bremen vs. Saarland 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
       integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
@@ -30,9 +31,31 @@
 
       /* Base styles */
       body {
-        background: linear-gradient(to bottom right, #f8fafc, #e0f2fe);
+        background: linear-gradient(to bottom right, #f8fafc, #e0f2fe) !important;
         margin: 0;
         padding: 0;
+      }
+
+      /* Gradient backgrounds for cards */
+      .bg-gradient-primary {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+      }
+
+      .bg-gradient-secondary {
+        background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+      }
+
+      .bg-gradient-accent {
+        background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+      }
+
+      .bg-gradient-success {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+      }
+
+      .bg-gradient-purple-red {
+        background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+        color: white !important;
       }
 
       /* Animation styles */
@@ -181,6 +204,10 @@
           ></button>
           <button
             onclick="goToSlide(5)"
+            class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"
+          ></button>
+          <button
+            onclick="goToSlide(6)"
             class="slide-btn w-3 h-3 rounded-full bg-gray-300 hover:bg-primary-600 transition-colors"
           ></button>
         </div>
@@ -447,9 +474,124 @@
       </div>
     </div>
 
-    <!-- Slide 4: System Analysis -->
+    <!-- Slide 4: Charts -->
     <div
       id="slide-3"
+      style="
+        display: none;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      "
+    >
+      <div class="max-w-6xl mx-auto w-full">
+        <div class="fade-in">
+          <h1 class="text-5xl font-black text-center text-gray-800 mb-8">
+            Systemanalyse & Vergleich
+          </h1>
+          <p class="text-xl text-center text-gray-600 mb-12">
+            Entwicklung der Beiträge und effektive Belastung
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-8 mb-8">
+            <!-- Chart 1: Contribution by Salary -->
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+              <h3 class="text-xl font-bold mb-4 text-gray-800">
+                Kammerbeiträge über verschiedene Gehaltsstufen
+              </h3>
+              <div class="h-64">
+                <canvas id="contributionChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 2: Effective Rate -->
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+              <h3 class="text-xl font-bold mb-4 text-gray-800">
+                Effektive Beitragsbelastung nach Einkommensstufen
+              </h3>
+              <div class="h-64">
+                <canvas id="effectiveRateChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison Table -->
+          <div class="bg-white p-6 rounded-xl shadow-xl overflow-hidden">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">
+              Beitragsvergleich nach Einkommensstufen
+            </h3>
+
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="p-3 text-left">Bruttogehalt</th>
+                    <th class="p-3 text-center bg-primary-50">Bremen (0,12%)</th>
+                    <th class="p-3 text-center bg-secondary-50">Saarland (0,15%)</th>
+                    <th class="p-3 text-center bg-accent-50">Differenz</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-t border-gray-200">
+                    <td class="p-3 font-medium">€5.000,00</td>
+                    <td class="p-3 text-center text-primary-600">€6,00</td>
+                    <td class="p-3 text-center text-secondary-600">€7,50</td>
+                    <td class="p-3 text-center text-accent-600">+€1,50 SL</td>
+                  </tr>
+                  <tr class="border-t border-gray-200 bg-gray-50">
+                    <td class="p-3 font-medium">€8.050,00</td>
+                    <td class="p-3 text-center text-primary-600">€9,66</td>
+                    <td class="p-3 text-center text-secondary-600">€12,08</td>
+                    <td class="p-3 text-center text-accent-600">+€2,42 SL</td>
+                  </tr>
+                  <tr class="border-t border-gray-200">
+                    <td class="p-3 font-medium bg-yellow-50">€10.000,00</td>
+                    <td class="p-3 text-center text-primary-600 bg-yellow-50">€12,00</td>
+                    <td class="p-3 text-center text-secondary-600 bg-yellow-50">€12,08</td>
+                    <td class="p-3 text-center text-accent-600 bg-yellow-50">+€0,08 SL</td>
+                  </tr>
+                  <tr class="border-t border-gray-200 bg-gray-50">
+                    <td class="p-3 font-medium">€15.000,00</td>
+                    <td class="p-3 text-center text-primary-600">€18,00</td>
+                    <td class="p-3 text-center text-secondary-600">€12,08</td>
+                    <td class="p-3 text-center text-blue-600">-€5,92 HB</td>
+                  </tr>
+                  <tr class="border-t border-gray-200">
+                    <td class="p-3 font-medium">€20.000,00</td>
+                    <td class="p-3 text-center text-primary-600">€24,00</td>
+                    <td class="p-3 text-center text-secondary-600">€12,08</td>
+                    <td class="p-3 text-center text-blue-600">-€11,92 HB</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Explanation Cards -->
+          <div class="grid md:grid-cols-2 gap-8 mt-8">
+            <div class="bg-gradient-primary text-white p-6 rounded-xl shadow-xl">
+              <h3 class="text-xl font-bold mb-3">Bremen: Proportional</h3>
+              <p>
+                Konstanter Beitragssatz von 0,12% auf das gesamte Gehalt. Die Belastung steigt
+                linear mit dem Einkommen.
+              </p>
+            </div>
+            <div class="bg-gradient-secondary text-white p-6 rounded-xl shadow-xl">
+              <h3 class="text-xl font-bold mb-3">Saarland: Degressiv</h3>
+              <p>
+                Effektiver Beitragssatz sinkt bei Einkommen über €8.050. Bei €20.000 nur noch 0,06%
+                effektive Belastung.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: System Analysis -->
+    <div
+      id="slide-4"
       style="
         display: none;
         min-height: 100vh;
@@ -511,7 +653,7 @@
 
     <!-- Slide 5: Flow Diagram -->
     <div
-      id="slide-4"
+      id="slide-5"
       style="
         display: none;
         min-height: 100vh;
@@ -527,9 +669,10 @@
           <div class="bg-white p-6 rounded-3xl shadow-xl mb-8">
             <div class="flex justify-center">
               <img
-                src="images/flow-diagram.svg"
+                src="images/flow-diagram-spacious.svg"
                 alt="Flussdiagramm der Kammerbeitragsberechnung"
                 class="max-w-full h-auto"
+                style="width: 100%; max-width: 1400px"
               />
             </div>
           </div>
@@ -561,7 +704,7 @@
 
     <!-- Slide 6: Conclusions -->
     <div
-      id="slide-5"
+      id="slide-6"
       style="
         display: none;
         min-height: 100vh;
@@ -639,11 +782,11 @@
     <script>
       // Version: 2025-07-28 14:30
       let currentSlide = 0;
-      const totalSlides = 6;
+      const totalSlides = 7;
 
       function showSlide(n) {
         console.log('Showing slide:', n);
-        document.title = `SD WORX - Slide ${n + 1}/6`;
+        document.title = `SD WORX - Slide ${n + 1}/7`;
 
         // Hide all slides with direct style manipulation
         for (let i = 0; i < totalSlides; i++) {
@@ -828,9 +971,122 @@
         console.error('Storage error:', e);
       }
 
+      // Chart initialization function
+      function initializeCharts() {
+        console.log('Initializing charts...');
+
+        // Chart 1: Kammerbeiträge über verschiedene Gehaltsstufen
+        const ctx1 = document.getElementById('contributionChart');
+        if (ctx1) {
+          console.log('Found contributionChart, initializing...');
+          new Chart(ctx1, {
+            type: 'line',
+            data: {
+              labels: ['€5.000', '€8.050', '€10.000', '€15.000', '€20.000', '€25.000', '€30.000'],
+              datasets: [
+                {
+                  label: 'Bremen (unbegrenzt)',
+                  data: [6, 9.66, 12, 18, 24, 30, 36],
+                  borderColor: '#3b82f6',
+                  backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                  fill: true,
+                  tension: 0.4,
+                },
+                {
+                  label: 'Saarland (gedeckelt)',
+                  data: [7.5, 12.08, 12.08, 12.08, 12.08, 12.08, 12.08],
+                  borderColor: '#0ea5e9',
+                  backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                  fill: true,
+                  tension: 0.4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                title: {
+                  display: false,
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Beitrag in €',
+                  },
+                },
+              },
+            },
+          });
+        } else {
+          console.log('contributionChart element not found');
+        }
+
+        // Chart 2: Effektive Beitragsbelastung
+        const ctx2 = document.getElementById('effectiveRateChart');
+        if (ctx2) {
+          console.log('Found effectiveRateChart, initializing...');
+          new Chart(ctx2, {
+            type: 'line',
+            data: {
+              labels: ['€5.000', '€8.050', '€10.000', '€15.000', '€20.000', '€25.000', '€30.000'],
+              datasets: [
+                {
+                  label: 'Bremen (proportional)',
+                  data: [0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12],
+                  borderColor: '#3b82f6',
+                  backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                  fill: false,
+                  tension: 0,
+                },
+                {
+                  label: 'Saarland (degressiv)',
+                  data: [0.15, 0.15, 0.12, 0.08, 0.06, 0.048, 0.04],
+                  borderColor: '#0ea5e9',
+                  backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                  fill: false,
+                  tension: 0,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                title: {
+                  display: false,
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Effektiver Beitragssatz in %',
+                  },
+                  ticks: {
+                    callback: function (value) {
+                      return value.toFixed(2) + '%';
+                    },
+                  },
+                },
+              },
+            },
+          });
+        } else {
+          console.log('effectiveRateChart element not found');
+        }
+      }
+
       // Initialize slide
       window.onload = function () {
         showSlide(currentSlide);
+
+        // Initialize charts with a slight delay to ensure DOM is fully loaded
+        setTimeout(initializeCharts, 500);
       };
     </script>
   </body>

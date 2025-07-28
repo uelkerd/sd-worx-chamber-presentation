@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="mermaid-1" width="100%" height="100%" viewBox="0 0 1400 1100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    /* Mermaid styling */
+    .label { font-family: 'trebuchet ms', verdana, arial; font-size: 18px; }
+    .node rect, .node circle, .node ellipse, .node polygon, .node path { fill: #f9f9f9; stroke: #333; stroke-width: 2px; }
+    .process rect { fill: #f9f9f9; stroke: #333; stroke-width: 2px; }
+    .decision rect, .decision path, .decision polygon { fill: #e7f2fa; stroke: #333; stroke-width: 2px; }
+    .startEnd rect, .startEnd circle, .startEnd ellipse { fill: #d4edda; stroke: #333; stroke-width: 2px; }
+    .bremen rect { fill: #dbeafe; stroke: #333; stroke-width: 2px; }
+    .saarland rect { fill: #e0f2fe; stroke: #333; stroke-width: 2px; }
+    .edgeLabel { background-color: white; padding: 8px; border-radius: 4px; font-size: 16px; }
+    .edgePath .path { stroke: #333; stroke-width: 2px; }
+    .cluster rect { fill: #f8f9fa; stroke: #999; stroke-width: 2px; stroke-dasharray: 5; }
+    .cluster .label { fill: #333; font-size: 24px; font-weight: bold; }
+  </style>
+
+  <!-- Bremen Process -->
+  <g class="cluster">
+    <rect x="50" y="50" width="500" height="900" rx="15" ry="15" fill="#f8f9fa" stroke="#999" stroke-width="2" stroke-dasharray="5" />
+    <text x="300" y="100" text-anchor="middle" class="label">Bremen</text>
+    
+    <!-- Start -->
+    <g class="node startEnd" transform="translate(300, 170)">
+      <ellipse rx="60" ry="40" />
+      <text x="0" y="5" text-anchor="middle" class="label">Start</text>
+    </g>
+    
+    <!-- Input -->
+    <g class="node process" transform="translate(300, 280)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Bruttogehalt: €10.000</text>
+    </g>
+    
+    <!-- Base -->
+    <g class="node process" transform="translate(300, 390)">
+      <rect width="320" height="80" rx="8" ry="8" x="-160" y="-40" />
+      <text x="0" y="-15" text-anchor="middle" class="label">Bemessungsgrundlage:</text>
+      <text x="0" y="15" text-anchor="middle" class="label">Steuerpflichtiger Arbeitslohn</text>
+    </g>
+    
+    <!-- Check -->
+    <g class="node decision" transform="translate(300, 520)">
+      <polygon points="-100,0 0,-100 100,0 0,100" />
+      <text x="0" y="5" text-anchor="middle" class="label">BBG-Prüfung?</text>
+    </g>
+    
+    <!-- Full -->
+    <g class="node process" transform="translate(300, 660)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Voller Betrag: €10.000</text>
+    </g>
+    
+    <!-- Calc -->
+    <g class="node process" transform="translate(300, 760)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">€10.000 × 0,12%</text>
+    </g>
+    
+    <!-- Result -->
+    <g class="node bremen" transform="translate(300, 850)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Ergebnis: €12,00</text>
+    </g>
+    
+    <!-- End -->
+    <g class="node startEnd" transform="translate(300, 940)">
+      <ellipse rx="60" ry="40" />
+      <text x="0" y="5" text-anchor="middle" class="label">Ende</text>
+    </g>
+    
+    <!-- Edges -->
+    <path d="M300,210 L300,255" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,305 L300,350" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,430 L300,470" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,570 L300,635" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,685 L300,735" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,785 L300,825" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,875 L300,900" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    
+    <!-- Edge Labels -->
+    <g class="edgeLabel" transform="translate(300, 600)">
+      <rect width="160" height="30" x="-80" y="-15" fill="white" />
+      <text x="0" y="5" text-anchor="middle" class="label">Nein (keine BBG)</text>
+    </g>
+  </g>
+  
+  <!-- Saarland Process -->
+  <g class="cluster" transform="translate(700, 0)">
+    <rect x="50" y="50" width="500" height="900" rx="15" ry="15" fill="#f8f9fa" stroke="#999" stroke-width="2" stroke-dasharray="5" />
+    <text x="300" y="100" text-anchor="middle" class="label">Saarland</text>
+    
+    <!-- Start -->
+    <g class="node startEnd" transform="translate(300, 170)">
+      <ellipse rx="60" ry="40" />
+      <text x="0" y="5" text-anchor="middle" class="label">Start</text>
+    </g>
+    
+    <!-- Input -->
+    <g class="node process" transform="translate(300, 280)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Bruttogehalt: €10.000</text>
+    </g>
+    
+    <!-- Base -->
+    <g class="node process" transform="translate(300, 390)">
+      <rect width="320" height="80" rx="8" ry="8" x="-160" y="-40" />
+      <text x="0" y="-15" text-anchor="middle" class="label">Bemessungsgrundlage:</text>
+      <text x="0" y="15" text-anchor="middle" class="label">SV-pflichtiges Bruttoentgelt</text>
+    </g>
+    
+    <!-- Check -->
+    <g class="node decision" transform="translate(300, 520)">
+      <polygon points="-100,0 0,-100 100,0 0,100" />
+      <text x="0" y="-20" text-anchor="middle" class="label">BBG-Prüfung:</text>
+      <text x="0" y="20" text-anchor="middle" class="label">> €8.050?</text>
+    </g>
+    
+    <!-- Cap -->
+    <g class="node process" transform="translate(180, 660)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Gedeckelt: €8.050</text>
+    </g>
+    
+    <!-- NoCap -->
+    <g class="node process" transform="translate(420, 660)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Voller Betrag</text>
+    </g>
+    
+    <!-- Calc -->
+    <g class="node process" transform="translate(180, 750)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">€8.050 × 0,15%</text>
+    </g>
+    
+    <!-- CalcFull -->
+    <g class="node process" transform="translate(420, 750)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Bruttogehalt × 0,15%</text>
+    </g>
+    
+    <!-- Round -->
+    <g class="node process" transform="translate(300, 830)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Rundung: €12,075</text>
+    </g>
+    
+    <!-- Result -->
+    <g class="node saarland" transform="translate(300, 900)">
+      <rect width="240" height="50" rx="8" ry="8" x="-120" y="-25" />
+      <text x="0" y="5" text-anchor="middle" class="label">Ergebnis: €12,08</text>
+    </g>
+    
+    <!-- End -->
+    <g class="node startEnd" transform="translate(300, 980)">
+      <ellipse rx="60" ry="40" />
+      <text x="0" y="5" text-anchor="middle" class="label">Ende</text>
+    </g>
+    
+    <!-- Edges -->
+    <path d="M300,210 L300,255" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,305 L300,350" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,430 L300,470" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M250,520 L180,635" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M350,520 L420,635" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M180,685 L180,725" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M420,685 L420,725" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M180,775 L300,805" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M420,775 L300,805" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,855 L300,875" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    <path d="M300,925 L300,940" class="edgePath" fill="none" stroke="#333" stroke-width="2" />
+    
+    <!-- Edge Labels -->
+    <g class="edgeLabel" transform="translate(200, 580)">
+      <rect width="60" height="30" x="-30" y="-15" fill="white" />
+      <text x="0" y="5" text-anchor="middle" class="label">Ja</text>
+    </g>
+    <g class="edgeLabel" transform="translate(400, 580)">
+      <rect width="60" height="30" x="-30" y="-15" fill="white" />
+      <text x="0" y="5" text-anchor="middle" class="label">Nein</text>
+    </g>
+  </g>
+</svg> 
