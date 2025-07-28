@@ -71,6 +71,7 @@
         canvas {
           max-width: 100% !important;
           height: auto !important;
+          display: block !important;
         }
         
         /* Tables for print */
@@ -90,6 +91,21 @@
           break-inside: avoid;
           margin-bottom: 1rem;
         }
+        
+        /* Ensure gradients show as solid colors in print */
+        .bg-gradient-to-br {
+          background: linear-gradient(to bottom right, #f8fafc, #e0f2fe) !important;
+        }
+      }
+
+      /* When body has printing class, show all slides */
+      body.printing .slide {
+        display: flex !important;
+        page-break-after: always;
+      }
+
+      body.printing nav {
+        display: none !important;
       }
 
       /* Base styles */
@@ -839,32 +855,46 @@
       }
 
       function exportPDF() {
-        // Show instructions
-        const instructionEl = document.createElement('div');
-                 instructionEl.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
-        instructionEl.innerHTML = `
-          <div class="bg-white p-6 rounded-xl shadow-2xl text-center max-w-md mx-auto">
-            <h3 class="text-xl font-bold mb-4">PDF Export</h3>
-            <p class="text-gray-600 mb-4">
-              Das Druckdialog öffnet sich gleich. Wählen Sie "Als PDF speichern" als Ziel aus.
-            </p>
-            <div class="flex gap-3 justify-center">
-              <button 
-                onclick="window.print(); document.body.removeChild(this.parentNode.parentNode.parentNode)" 
-                class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Drucken / PDF erstellen
-              </button>
-              <button 
-                onclick="document.body.removeChild(this.parentNode.parentNode.parentNode)" 
-                class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition-colors"
-              >
-                Abbrechen
-              </button>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(instructionEl);
+        // First, show all slides for printing
+        for (let i = 0; i < totalSlides; i++) {
+          const slide = document.getElementById(`slide-${i}`);
+          if (slide) {
+            slide.style.display = 'flex';
+            slide.classList.add('print-visible');
+          }
+        }
+        
+        // Hide navigation during print
+        const nav = document.querySelector('nav');
+        if (nav) {
+          nav.style.display = 'none';
+        }
+        
+        // Add print class to body
+        document.body.classList.add('printing');
+        
+        // Print immediately
+        window.print();
+        
+        // After print dialog closes, restore normal view
+        setTimeout(() => {
+          // Hide all slides again
+          for (let i = 0; i < totalSlides; i++) {
+            const slide = document.getElementById(`slide-${i}`);
+            if (slide) {
+              slide.style.display = i === currentSlide ? 'flex' : 'none';
+              slide.classList.remove('print-visible');
+            }
+          }
+          
+          // Show navigation again
+          if (nav) {
+            nav.style.display = 'flex';
+          }
+          
+          // Remove print class
+          document.body.classList.remove('printing');
+        }, 1000);
       }
 
       // Keyboard navigation
