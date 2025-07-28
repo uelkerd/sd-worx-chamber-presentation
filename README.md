@@ -2,6 +2,8 @@
 
 Eine rechtsvergleichende Systemanalyse der Kammerbeitragssysteme in Bremen und Saarland.
 
+*Zuletzt aktualisiert: Juli 2025*
+
 ## Live Demo
 
 Die Präsentation ist live verfügbar unter: [https://uelkerd.github.io/sd-worx-chamber-presentation/presentation.html](https://uelkerd.github.io/sd-worx-chamber-presentation/presentation.html)
