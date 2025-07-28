@@ -2,6 +2,18 @@
 
 Eine interaktive Präsentation über die rechtsvergleichende Systemanalyse der Kammerbeiträge zwischen Bremen und Saarland für SD WORX.
 
+## 🚀 Live Demo
+
+**https://uelkerd.github.io/sd-worx-chamber-presentation/presentation.html**
+
+## 🔧 Important Note
+
+We've created a standalone HTML file that works correctly with all slides:
+
+1. **Use this direct link**: [presentation.html](https://uelkerd.github.io/sd-worx-chamber-presentation/presentation.html)
+2. **Clear Browser Cache**: Press `Ctrl+Shift+R` (or `Cmd+Shift+R` on Mac) if needed
+3. **Navigation**: Use arrow keys or the dots at the bottom to navigate between slides
+
 ## 🎯 Projektübersicht
 
 Diese React-Anwendung präsentiert eine detaillierte Analyse der Kammerbeiträge in Bremen und Saarland für das Jahr 2025. Die Präsentation zeigt die fundamentalen Unterschiede zwischen den beiden Systemen und deren Auswirkungen auf die Beitragsberechnung.
